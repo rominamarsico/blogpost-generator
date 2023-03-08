@@ -1,54 +1,30 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby minimal TypeScript starter
-</h1>
+# Blog by Ramdadam
 
-## 🚀 Quick start
+#### Made by Romina Marsico
 
-1.  **Create a Gatsby site.**
+### Start local dev server
 
-    Use the Gatsby CLI to create a new site, specifying the minimal TypeScript starter.
+Run `npm run dev` to start the local development server and see the results
+at: http://localhost:8000/
+View GraphiQL, an in-browser IDE, to explore your site's data and
+schema: http://localhost:8000/___graphql
 
-    ```shell
-    # create a new Gatsby site using the minimal TypeScript starter
-    npm init gatsby
-    ```
+### Add a new blog post entry
 
-2.  **Start developing.**
+Inside the [Posts Folder](./src/posts) you can add a new .mdx file and start typing your content.
+Don't forget to insert the following at the top of your newly created .mdx file:
 
-    Navigate into your new site’s directory and start it up.
+```
+---
+title: <Title>
+slug: </url-for-blog-post>
+description: <Short summary about your blog post for the Home Page.>
+---
+```
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+### Project insides
 
-3.  **Open the code and start customizing!**
-
-    Your site is now running at http://localhost:8000!
-
-    Edit `src/pages/index.tsx` to see your site update in real-time!
-
-4.  **Learn more**
-
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-
-    - [Tutorials](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-
-    - [Guides](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-
-## 🚀 Quick start (Gatsby Cloud)
-
-Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
-
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-minimal-ts)
+- [index.tsx](./src/pages/index.tsx) is your project entry
+- [page-layout.tsx](src/components/page-layout.tsx) is referenced
+  in [gatsby-node.ts](./gatsby-node.ts) to generate the static blog-post layout, so don't change the
+  file name only in one place.

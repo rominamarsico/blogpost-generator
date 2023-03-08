@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { bgColor, fontColor } from "./styles/colors";
+import { primaryColor, highContrastColor } from "./styles/colors";
 
 /**
  * changes here require the dev-server to be restarted
@@ -20,7 +20,11 @@ export default function HTML(props) {
       </head>
       <body
         {...props.bodyAttributes}
-        style={{ backgroundColor: bgColor, color: fontColor, margin: "0" }}
+        style={{
+          backgroundColor: primaryColor,
+          color: highContrastColor,
+          margin: "0",
+        }}
       >
         {props.preBodyComponents}
         <div

@@ -1,5 +1,7 @@
-export const bgColor = "#49473c";
+export const primaryColor = "#1b1b2b";
 
-export const fontColor = "#EFEFE6";
+export const lowContrastColor = "#2d2d47";
 
-export const highlightColor = "#FFA233";
+export const highContrastColor = "#EFEFE6";
+
+export const highlightColor = "#635ffd";

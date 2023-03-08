@@ -1,16 +1,31 @@
 import React from "react";
 import { graphql, useStaticQuery, Link } from "gatsby";
 import styled from "@emotion/styled";
-import { fontColor, highlightColor } from "../styles/colors";
+import { highlightColor, primaryColor } from "../styles/colors";
 
-const StSidebar = {
+const StSidebar = styled.div({
   height: "100%",
   width: "20rem",
-};
-
-const StLinks = styled(Link)({
-  color: fontColor,
 });
+
+const StLinkWrapper = styled.div((props: LinkProps) => ({
+  padding: "1rem 0 1rem 1rem",
+  background: props.isCurrentPath
+    ? `linear-gradient(90deg, ${highlightColor} 0%, ${primaryColor} 100%)`
+    : "",
+}));
+
+const StLink = styled(Link)({
+  textDecoration: "none",
+});
+
+const StSidebarTitle = styled.h1({
+  paddingLeft: "1rem",
+});
+
+type LinkProps = {
+  isCurrentPath: boolean;
+};
 
 type Data = {
   frontmatter: {
@@ -40,14 +55,9 @@ export const Sidebar = () => {
       const isCurrentPath = location.pathname === slug + "/";
 
       return (
-        <p>
-          <StLinks
-            to={slug}
-            style={{ color: isCurrentPath ? highlightColor : fontColor }}
-          >
-            {title}
-          </StLinks>
-        </p>
+        <StLinkWrapper isCurrentPath={isCurrentPath}>
+          <StLink to={slug}>{title}</StLink>
+        </StLinkWrapper>
       );
     });
   }
@@ -55,9 +65,15 @@ export const Sidebar = () => {
   const sidebarLinks = getSidebarLinks();
 
   return (
-    <div style={StSidebar}>
-      <h1>About</h1>
+    <StSidebar>
+      <StLinkWrapper isCurrentPath={location.pathname === "/"}>
+        <StLink to={"/"}>
+          <h1>Home</h1>
+        </StLink>
+      </StLinkWrapper>
+      <StSidebarTitle>About</StSidebarTitle>
+      <StSidebarTitle>Posts</StSidebarTitle>
       <div>{sidebarLinks}</div>
-    </div>
+    </StSidebar>
   );
 };
