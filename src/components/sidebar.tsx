@@ -2,6 +2,7 @@ import React from "react";
 import { graphql, useStaticQuery, Link } from "gatsby";
 import styled from "@emotion/styled";
 import { highlightColor, primaryColor } from "../styles/colors";
+import { useLocation } from "@reach/router";
 
 const StSidebar = styled.div({
   height: "100%",
@@ -47,6 +48,8 @@ export const Sidebar = () => {
       }
     }
   `);
+
+  const location = useLocation();
 
   function getSidebarLinks() {
     return data.allMdx.nodes.map((entry: Data) => {

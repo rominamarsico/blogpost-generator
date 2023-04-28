@@ -13,7 +13,7 @@ type Card = {
   frontmatter: PostData;
 };
 
-export const Home = () => {
+const Home = () => {
   const data = useStaticQuery(graphql`
     query {
       allMdx {
@@ -51,3 +51,5 @@ export const Home = () => {
     </PageLayoutDesign>
   );
 };
+
+export default Home;
