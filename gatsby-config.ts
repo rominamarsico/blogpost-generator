@@ -13,16 +13,23 @@ const config: GatsbyConfig = {
     "gatsby-plugin-styled-components",
     "gatsby-plugin-image",
     "gatsby-plugin-sitemap",
-    "gatsby-plugin-mdx",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     {
-      resolve: "gatsby-source-filesystem",
+      // https://github.com/gatsbyjs/gatsby/discussions/35179#discussioncomment-2400946
+      resolve: "gatsby-plugin-mdx",
       options: {
-        name: "images",
-        path: "./src/images/",
+        extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              maxWidth: 590,
+              classPrefix: "language-",
+            },
+          },
+        ],
       },
-      __key: "images",
     },
     {
       resolve: "gatsby-source-filesystem",
@@ -31,21 +38,6 @@ const config: GatsbyConfig = {
         path: "./src/posts/",
       },
       __key: "posts",
-    },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        // Footnotes mode (default: true)
-        footnotes: true,
-        // GitHub Flavored Markdown mode (default: true)
-        gfm: true,
-        // Plugins configs
-        options: {
-          name: "pages",
-          path: "./src/pages/",
-        },
-        plugins: [],
-      },
     },
     {
       resolve: `gatsby-plugin-emotion`,
