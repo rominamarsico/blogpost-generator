@@ -1,0 +1,19 @@
+yaml
+name: Blogpost Generator CI
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Commit
+      uses: actions/checkout@v2
+      - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 18.14.0
+      - name: Run esLint
+      run: |
+        npm run lint

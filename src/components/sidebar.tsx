@@ -3,7 +3,6 @@ import { graphql, useStaticQuery, Link } from "gatsby";
 import styled from "@emotion/styled";
 import { highlightColor, primaryColor } from "../styles/colors";
 import { useLocation } from "@reach/router";
-import { getTitleFromHierarchy } from "../utils/util-functions";
 
 const StSidebar = styled.div({
   height: "100%",
@@ -71,7 +70,7 @@ export const Sidebar = () => {
   }, []);
 
   function getSidebarHierarchy() {
-    let hierarchy: ISidebar[] = [];
+    const hierarchy: ISidebar[] = [];
     let postTitle = "";
     let category = "";
 
@@ -116,9 +115,9 @@ export const Sidebar = () => {
   }
 
   function getSidebar() {
-    return sidebarHierarchy.map((sidebarEntry) => {
+    return sidebarHierarchy.map((sidebarEntry, index) => {
       return (
-        <div>
+        <div key={index}>
           <StCategory>
             {sidebarEntry.postCategory !== "aaa_unsorted" &&
               sidebarEntry.postCategory}
