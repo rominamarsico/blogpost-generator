@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { graphql, useStaticQuery, Link } from "gatsby";
 import styled from "@emotion/styled";
 import { highlightColor, primaryColor } from "../styles/colors";
 import { useLocation } from "@reach/router";
+import { getTitleFromHierarchy } from "../utils/util-functions";
 
 const StSidebar = styled.div({
   height: "100%",
@@ -20,8 +21,9 @@ const StLink = styled(Link)({
   textDecoration: "none",
 });
 
-const StSidebarTitle = styled.h1({
-  paddingLeft: "1rem",
+const StCategory = styled.h3({
+  padding: "3rem 0 0 1rem",
+  fontStyle: "italic",
 });
 
 type LinkProps = {
@@ -35,14 +37,25 @@ type Data = {
   };
 };
 
+type IPost = {
+  title: string;
+  slug: string;
+};
+
+type ISidebar = {
+  postCategory: string;
+  posts: IPost[];
+};
+
 export const Sidebar = () => {
   const data = useStaticQuery(graphql`
     query {
-      allMdx {
+      allMdx(sort: { fields: [frontmatter___title], order: ASC }) {
         nodes {
           frontmatter {
             title
             slug
+            date(formatString: "YYYY-MM-DD")
           }
         }
       }
@@ -51,31 +64,96 @@ export const Sidebar = () => {
 
   const location = useLocation();
 
-  function getSidebarLinks() {
-    return data.allMdx.nodes.map((entry: Data) => {
-      const { title, slug } = entry.frontmatter;
+  const [sidebarHierarchy, setSidebarHierarchy] = useState<ISidebar[]>([]);
 
-      const isCurrentPath = location.pathname === slug + "/";
+  useEffect(() => {
+    getSidebarHierarchy();
+  }, []);
 
+  function getSidebarHierarchy() {
+    let hierarchy: ISidebar[] = [];
+    let postTitle = "";
+    let category = "";
+
+    return data.allMdx.nodes.map((blogPost: Data) => {
+      const { title, slug } = blogPost.frontmatter;
+      const getTitleHierarchy = title.split("/");
+      const postHasCategory = getTitleHierarchy.length > 1;
+
+      if (postHasCategory) {
+        postTitle = getTitleHierarchy[getTitleHierarchy.length - 1];
+        category = getTitleHierarchy[0];
+      } else {
+        postTitle = title;
+        category = "aaa_unsorted";
+      }
+
+      if (hierarchy.length === 0) {
+        hierarchy.push({
+          postCategory: category,
+          posts: [{ title: postTitle, slug: slug }],
+        });
+      } else {
+        let categoryExists = false;
+
+        hierarchy.forEach((entry) => {
+          if (entry.postCategory === category) {
+            entry.posts.push({ title: postTitle, slug: slug });
+            categoryExists = true;
+          }
+        });
+
+        if (!categoryExists) {
+          hierarchy.push({
+            postCategory: category,
+            posts: [{ title: postTitle, slug: slug }],
+          });
+        }
+      }
+
+      setSidebarHierarchy(hierarchy);
+    });
+  }
+
+  function getSidebar() {
+    return sidebarHierarchy.map((sidebarEntry) => {
       return (
-        <StLinkWrapper isCurrentPath={isCurrentPath}>
-          <StLink to={slug}>{title}</StLink>
-        </StLinkWrapper>
+        <div>
+          <StCategory>
+            {sidebarEntry.postCategory !== "aaa_unsorted" &&
+              sidebarEntry.postCategory}
+          </StCategory>
+          <div>
+            {sidebarEntry.posts.map((post) => {
+              const isCurrentPath = location.pathname === post.slug + "/";
+              return (
+                <StLinkWrapper isCurrentPath={isCurrentPath}>
+                  <StLink to={post.slug}>{post.title}</StLink>
+                </StLinkWrapper>
+              );
+            })}
+          </div>
+        </div>
       );
     });
   }
 
-  const sidebarLinks = getSidebarLinks();
+  const sidebarLinks = getSidebar();
 
   return (
     <StSidebar>
       <StLinkWrapper isCurrentPath={location.pathname === "/"}>
         <StLink to={"/"}>
-          <h1>Home</h1>
+          <h3>Home</h3>
         </StLink>
       </StLinkWrapper>
-      <StSidebarTitle>About</StSidebarTitle>
-      <StSidebarTitle>Posts</StSidebarTitle>
+
+      <StLinkWrapper isCurrentPath={location.pathname === "/about/"}>
+        <StLink to={"/about"}>
+          <h3>About me</h3>
+        </StLink>
+      </StLinkWrapper>
+
       <div>{sidebarLinks}</div>
     </StSidebar>
   );

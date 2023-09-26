@@ -1,5 +1,5 @@
 const path = require("path");
-const postTemplate = path.resolve(`./src/components/page-layout.tsx`);
+const postTemplate = path.resolve(`./src/components/blogpost-template.tsx`);
 
 type CreateNode = {
   node: any;
@@ -34,6 +34,7 @@ exports.createPages = async ({ graphql, actions, reporter }: CreatePages) => {
           id
           frontmatter {
             slug
+            tags
           }
           internal {
             contentFilePath
