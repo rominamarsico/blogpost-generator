@@ -1,5 +1,4 @@
-yaml
-name: Blogpost Generator CI
+name: CI
 on:
   push:
     branches:
