@@ -30,7 +30,7 @@ jobs:
           node-version: 18.14.0
       -
         run: |
-        npm ci
+          npm ci
       - name: Run Unit Tests
         run: |
           npm run test
