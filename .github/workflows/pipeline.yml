@@ -16,9 +16,9 @@ jobs:
         with:
           node-version: 18.14.0
       -
-        name: Run esLint
+        name: Run build
         run: |
-          npm run lint
+          npm run build
   test:
       runs-on: ubuntu-latest
       steps:
