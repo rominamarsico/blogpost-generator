@@ -10,7 +10,7 @@ interface ICard {
   children: React.ReactNode;
 }
 
-const Home = () => {
+const Home = (): React.ReactNode => {
   const data = useStaticQuery(graphql`
     query {
       allMdx(sort: { fields: [frontmatter___date], order: DESC }) {

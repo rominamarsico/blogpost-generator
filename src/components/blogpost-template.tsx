@@ -12,7 +12,10 @@ type PageLayoutProps = {
   children: React.ReactNode;
 };
 
-export default function BlogpostTemplate({ data, children }: PageLayoutProps) {
+export default function BlogpostTemplate({
+  data,
+  children,
+}: PageLayoutProps): React.ReactNode {
   const fullTitle = data.mdx.frontmatter.title;
   const title = getTitleFromHierarchy(fullTitle);
 

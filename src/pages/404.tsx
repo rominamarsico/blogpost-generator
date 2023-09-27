@@ -7,7 +7,7 @@ const NotFoundPage: React.FC<PageProps> = () => {
     <PageWrapper>
       <h1>Page not found</h1>
       <p>
-        Sorry, we couldn't find the page you were looking for. Please try again
+        Sorry, we could not find the page you were looking for. Please try again
         later or feel free to browse my other blogposts.
       </p>
 

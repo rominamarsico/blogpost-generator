@@ -123,10 +123,10 @@ export const Sidebar = () => {
               sidebarEntry.postCategory}
           </StCategory>
           <div>
-            {sidebarEntry.posts.map((post) => {
+            {sidebarEntry.posts.map((post, index) => {
               const isCurrentPath = location.pathname === post.slug + "/";
               return (
-                <StLinkWrapper isCurrentPath={isCurrentPath}>
+                <StLinkWrapper key={index} isCurrentPath={isCurrentPath}>
                   <StLink to={post.slug}>{post.title}</StLink>
                 </StLinkWrapper>
               );
